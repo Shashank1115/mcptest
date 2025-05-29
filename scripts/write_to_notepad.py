@@ -70,14 +70,14 @@ def write_to_notepad(text, filename="essay.txt"):
             time.sleep(1)
             pyautogui.hotkey("alt", "f4")
         else:
-            print("❌ Notepad did not open in time.")
+            print("Notepad did not open in time.")
     except Exception as e:
-        print(f"❌ Error during Notepad operation: {e}")
+        print(f"Error during Notepad operation: {e}")
 
 if __name__ == "__main__":
     topic = input("Enter the essay topic: ").strip()
     if not topic:
-        print("❌ No topic provided. Please enter a valid topic.")
+        print(" No topic provided. Please enter a valid topic.")
     else:
         essay = generate_essay_text(topic)
         filename = input("Enter filename (default: essay.txt): ").strip() or "essay.txt"

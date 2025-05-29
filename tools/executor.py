@@ -180,7 +180,7 @@ def main():
     print("\n[LLM] Interpreting...")
 
     topic = extract_topic_from_command(command)
-    print(f"\n➡️ Extracted topic: {topic}")
+    print(f"\n Extracted topic: {topic}")
 
     run_tool("text_generation", topic)
     run_tool("notepad")
