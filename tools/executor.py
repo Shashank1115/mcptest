@@ -100,6 +100,8 @@ import time
 import requests
 import pyperclip
 import re
+from scripts.file_saver_script import save_to_file
+
 
 API_KEY = "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"
 API_URL = "https://api.groq.com/openai/v1/chat/completions"
@@ -162,6 +164,18 @@ def type_and_save_essay(content):
 
 context = {}
 
+# def run_tool(tool_name, content=None):
+#     if tool_name == "text_generation":
+#         essay = generate_essay_text(content)
+#         context["essay"] = essay
+#         return essay
+#     elif tool_name == "notepad":
+#         launch_notepad()
+#     elif tool_name == "write_to_notepad":
+#         essay = context.get("essay", "No essay generated.")
+#         type_and_save_essay(essay)
+#     else:
+#         raise Exception(f"Unknown tool: {tool_name}")
 def run_tool(tool_name, content=None):
     if tool_name == "text_generation":
         essay = generate_essay_text(content)
@@ -172,19 +186,33 @@ def run_tool(tool_name, content=None):
     elif tool_name == "write_to_notepad":
         essay = context.get("essay", "No essay generated.")
         type_and_save_essay(essay)
+    elif tool_name == "save_file":
+        save_to_file(content)  # content must be a dict with "filename" and "text"
     else:
         raise Exception(f"Unknown tool: {tool_name}")
+
 
 def main():
     command = input("Enter your command: ")
     print("\n[LLM] Interpreting...")
 
-    topic = extract_topic_from_command(command)
-    print(f"\n Extracted topic: {topic}")
+    topic = extract_essay_topic(command)
+    if not topic:
+        print("Could not extract topic. Please try phrasing it like 'Write an essay on climate change'.")
+        return
+
+    print(f"\nExtracted topic: {topic}")
 
     run_tool("text_generation", topic)
     run_tool("notepad")
     run_tool("write_to_notepad")
+
+    # Optional file saving
+    run_tool("save_file", {
+    "filename": "essay.txt",
+    "text": context.get("essay")
+})
+
 
 if __name__ == "__main__":
     main()

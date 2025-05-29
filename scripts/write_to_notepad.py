@@ -80,5 +80,5 @@ if __name__ == "__main__":
         print(" No topic provided. Please enter a valid topic.")
     else:
         essay = generate_essay_text(topic)
-        filename = input("Enter filename (default: essay.txt): ").strip() or "essay.txt"
+        filename = input("Enter filename (default: essay.txt): ").strip()  or "essay.txt"
         write_to_notepad(essay, filename)
