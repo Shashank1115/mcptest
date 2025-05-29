@@ -1,0 +1,2 @@
+run python main.py
+after that when it ask enter command write there open notepad , write essay on topic of your choice , and save it 
