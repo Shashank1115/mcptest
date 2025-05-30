@@ -2,5 +2,8 @@
   "generate_essay": "scripts/generate_essay.py",
   "write_to_notepad": "scripts/write_to_notepad.py",
   "file_saver_script": "scripts/file_saver_script.py",
-  "text_generation_script": "scripts/generate_essay.py"
+  "text_generation_script": "scripts/generate_essay.py",
+  "generate_email": "scripts/generate_email.py",
+  "send_email": "scripts/send_email.py"
+
 }

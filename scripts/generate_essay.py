@@ -38,9 +38,7 @@
 
 import openai
 import os
-from dotenv import load_dotenv
 
-load_dotenv()  # Loads API key from .env
 openai.api_key = os.getenv("GROQ_API_KEY")
 openai.api_base = "https://api.groq.com/openai/v1/"
 

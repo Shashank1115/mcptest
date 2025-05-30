@@ -101,6 +101,8 @@ import requests
 import pyperclip
 import re
 from scripts.file_saver_script import save_to_file
+from scripts.send_email import send_email
+from scripts.generate_email import generate_email
 
 
 API_KEY = "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"
@@ -177,8 +179,24 @@ context = {}
 #     else:
 #         raise Exception(f"Unknown tool: {tool_name}")
 def run_tool(tool_name, content=None):
+    # Check if the tool_name is "text_generation"
+    """
+    Run a tool based on the given tool_name and content.
+
+    Args:
+        tool_name (str): The name of the tool to run.
+        content (str, optional): The content to pass to the tool. Defaults to None.
+
+    Returns:
+        str: The output of the tool.
+
+    Raises:
+        Exception: If the tool_name is not recognized.
+    """
     if tool_name == "text_generation":
+        # Generate an essay text based on the content
         essay = generate_essay_text(content)
+        # Store the essay in the context dictionary
         context["essay"] = essay
         return essay
     elif tool_name == "notepad":
@@ -187,7 +205,22 @@ def run_tool(tool_name, content=None):
         essay = context.get("essay", "No essay generated.")
         type_and_save_essay(essay)
     elif tool_name == "save_file":
-        save_to_file(content)  # content must be a dict with "filename" and "text"
+        save_to_file(content)
+   
+    elif tool_name == "generate_email":
+     topic = content or "General email"
+     email_data = generate_email(topic)
+     context["email"] = email_data
+     return email_data
+    elif tool_name == "generate_email_subject":
+     topic = content or "General email"
+    # Use your LLM API to generate a subject based on the topic
+     prompt = f"Write a suitable email subject about {topic}"
+     subject = deepseek_query(prompt)
+     return subject
+    elif tool_name == "send_email":
+        # Expecting a dict with 'to', 'subject', and 'body'
+     return send_email(content["to"], content["subject"], content["body"])
     else:
         raise Exception(f"Unknown tool: {tool_name}")
 
