@@ -109,11 +109,13 @@ API_KEY = "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"
 API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 def deepseek_query(prompt):
+    # Set the headers for the API request
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
 
+    # Set the data for the API request
     data = {
         "model": "llama3-70b-8192",
         "messages": [
@@ -124,11 +126,14 @@ def deepseek_query(prompt):
         "max_tokens": 512
     }
 
+    # Make the API request
     response = requests.post(API_URL, headers=headers, json=data)
 
+    # Check if the API request was successful
     if response.status_code != 200:
         raise Exception(f"[Groq API Error] {response.status_code}: {response.text}")
 
+    # Return the response from the API
     return response.json()["choices"][0]["message"]["content"].strip()
 
 
@@ -215,7 +220,7 @@ def run_tool(tool_name, content=None):
     elif tool_name == "generate_email_subject":
      topic = content or "General email"
     # Use your LLM API to generate a subject based on the topic
-     prompt = f"Write a suitable email subject about {topic}"
+     prompt = f"Write a suitable email subject about and do not write here is suitable subject directly write the subject:  {topic}"
      subject = deepseek_query(prompt)
      return subject
     elif tool_name == "send_email":
@@ -226,21 +231,30 @@ def run_tool(tool_name, content=None):
 
 
 def main():
+    # Get user input
     command = input("Enter your command: ")
+    # Print message to indicate that the command is being interpreted
     print("\n[LLM] Interpreting...")
 
+    # Extract the topic from the user input
     topic = extract_essay_topic(command)
+    # If the topic cannot be extracted, print an error message
     if not topic:
         print("Could not extract topic. Please try phrasing it like 'Write an essay on climate change'.")
         return
 
+    # Print the extracted topic
     print(f"\nExtracted topic: {topic}")
 
+    # Run the text generation tool with the extracted topic
     run_tool("text_generation", topic)
+    # Run the notepad tool
     run_tool("notepad")
+    # Run the write to notepad tool
     run_tool("write_to_notepad")
 
     # Optional file saving
+    # Run the save file tool with the filename and text to be saved
     run_tool("save_file", {
     "filename": "essay.txt",
     "text": context.get("essay")

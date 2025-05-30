@@ -4,10 +4,13 @@ import json
 from tools.executor import extract_essay_topic
 import re
 def main():
+    # Get user input
     user_input = input("Enter your command: ")
     print("\n[LLM] Interpreting...")
+    # Get task plan from user input
     task_json = get_task_plan(user_input)
 
+    # Check if user input contains email keywords
     if re.search(r"mail|email|send.*email", user_input, re.I):
         # Extract email details: recipient, subject, body topic
         recipient_match = re.search(r"to ([\w\.\-]+@[\w\.\-]+)", user_input, re.I)
@@ -45,12 +48,15 @@ def main():
     
 
     try:
+        # Convert task_json to a dictionary
         task_data = json.loads(task_json)
     except json.JSONDecodeError:
+        # Print error message if task_json is not valid JSON
         print("[ Error] LLM did not return valid JSON:")
         print(task_json)
         return
 
+    # Check if task_data is empty or does not contain subtasks
     if not task_data or "subtasks" not in task_data:
         print("[ Error] Invalid task structure:")
         print(task_data)
