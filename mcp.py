@@ -16,7 +16,7 @@ Given a user input, return a JSON with:
     - agent (LLM or SystemAgent),
     - tool (script/tool to run)
 
-ONLY respond in **valid JSON** format. Do **not** add any explanation, markdown, or formatting.
+ONLY respond in **valid JSON** format. Do **not** add any explanation, markdown, or formatting and every one must have key value pair and only and do not change tool name every time make it same .
 Input: "{user_input}"
 
 Respond ONLY in this JSON format:
@@ -73,6 +73,7 @@ Respond ONLY in this JSON format:
     return response.json()["choices"][0]["message"]["content"].strip()
 
 if __name__ == "__main__":
-    user_input = " "
+    user_input = input("Enter your task: ")
     task_plan = get_task_plan(user_input)
     print(task_plan)
+

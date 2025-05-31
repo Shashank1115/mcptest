@@ -4,6 +4,22 @@
   "file_saver_script": "scripts/file_saver_script.py",
   "text_generation_script": "scripts/generate_essay.py",
   "generate_email": "scripts/generate_email.py",
-  "send_email": "scripts/send_email.py"
+  "send_email": "scripts/send_email.py",
+  "website_planning": "generate_text",
+  "feature_generation": "generate_text",
+  "content_generation": "generate_text",
+  "html_generation": "generate_text",
+  "form_builder": "scripts/generate_form.py",
+  "layout_design": "generate_text",
+   "hosting_setup": "scripts/hosting_setup.py",
+   "code_generation": "scripts/generate_essay.py",
+   "vscode_open": "scripts/vscode_open.py",
+   "new_file": "scripts/create_file.py",
+   "html_generator.py": "scripts/html_generator.py",
+   "write_to_file": "scripts/write_to_file.py",
+   "playwright_browser": "scripts/playwright_browser.py",
+   "web_interactor": "scripts/web_interactor.py"
+
+
 
 }
